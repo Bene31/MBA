@@ -1,0 +1,7 @@
+"0","ggplotly("
+"0","  ggplot(atlas_padronizado_long) +"
+"0","    geom_boxplot(aes(x = variable, y = value, fill = variable)) +"
+"0","    labs(x = ""Variáveis"","
+"0","         y = ""Valores"") +"
+"0","    theme_bw()"
+"0",")"

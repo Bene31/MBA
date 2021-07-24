@@ -1,0 +1,3 @@
+ggplot(covid_110521) + 
+  geom_line(aes(x = t, y = cumulative_cases))+
+              theme_classic()

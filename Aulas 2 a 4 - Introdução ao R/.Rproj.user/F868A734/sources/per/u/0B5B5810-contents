@@ -1,0 +1,55 @@
+---
+title: "Untitled"
+author: "Arthur Terra"
+date: "03/06/2021"
+output: html_document
+---
+
+Aproveitando o assunto "tendências", vamos seguir explorando as capacidades do R com uma nova base de dados sobre a corrupção no mundo (Fisman & Miguel, 2007):
+```{r}
+load("fisman_miguel.RData")
+```
+
+Notem que seria interessante plotar, por exemplo, o número de violações de trânsito em função do índice de corrupção do país. Vamos tentar?
+
+```{r}
+ggplot(fisman_miguel) +
+  geom_point(aes(x = corruption, y = violations)) +
+  geom_smooth(aes(x = corruption, y = violations), 
+              se = FALSE, 
+              method = "loess") +
+  geom_text(aes(x = corruption, y = violations, label = code))
+```
+
+Note que há dois problemas principais: 1) Há muitos países sem violações reportadas, ou com um baixo número de violações, e países com um número alto de violações reportadas, o que deixaria o gráfico com problemas de escala; 2) Haveria uma dupla contagem, porque os países foram verificados antes e depois da imposição da nova lei de NY.
+
+Vamos tentar mitigar o primeiro problema, padronizando os valores da variável violations
+```{r}
+ggplot(fisman_miguel) +
+  geom_point(aes(x = corruption, y = log(violations))) +
+  geom_smooth(aes(x = corruption, y = log(violations)), 
+              se = F, 
+              method = "loess") +
+  geom_text(aes(x = corruption, y = log(violations), label = code))
+```
+Agora, podemos tentar mitigar o segundo problema com alguma função de facet:
+```{r}
+ggplot(fisman_miguel) +
+  geom_point(aes(x = corruption, y = log(violations))) +
+  geom_smooth(aes(x = corruption, y = log(violations)), 
+              se = F, 
+              method = "loess") +
+  geom_text(aes(x = corruption, y = log(violations), label = code)) +
+  facet_wrap(~post) +
+  theme_bw()
+```
+
+Note um terceiro problema não identificado anteriormente: a sobreposição de labels. Podemos tentar resolver a situação com a função geom_text_repel(), do pacote ggrepel:
+```{r}
+ggplot(fisman_miguel) +
+  geom_point(aes(x = corruption, y = log(violations))) +
+  geom_smooth(aes(x = corruption, y = log(violations)), 
+              se = F, method = "loess") +
+  geom_text_repel(aes(x = corruption, y = log(violations), label = code)) +
+  facet_wrap(~post) +
+  theme_bw()

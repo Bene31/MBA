@@ -1,0 +1,9 @@
+load("acm_arquivo01.RData")
+load("acm_arquivo02.RData")
+
+acm_arquivo02
+
+View(acm_arquivo01)
+
+acm_arquivo01$eig
+

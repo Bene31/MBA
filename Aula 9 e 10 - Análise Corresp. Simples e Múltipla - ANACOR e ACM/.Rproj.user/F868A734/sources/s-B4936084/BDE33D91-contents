@@ -1,0 +1,88 @@
+anacor_arquivo03$eig
+
+
+ca_coordenadas_anacor_arquivo03 <- rbind(anacor_arquivo03$row$coord, anacor_arquivo03$col$coord)
+
+ca_coordenadas_anacor_arquivo03
+
+load("anacor_arquivo02.RData")
+
+View(anacor_arquivo02)
+
+
+
+#Variável em linha - coordenada no eixo das abcissas
+Xl_anacor_arquivo02 <- diag((decomp$d[1]) * diag(diag(Dl)^(-1/2)) * decomp$u[,1])
+Xl_anacor_arquivo02
+
+#Variável em linha - coordenada no eixo das ordenadas
+Yl_anacor_arquivo02 <- diag((decomp$d[2]) * diag(diag(Dl)^(-1/2)) * decomp$u[,2])
+Yl_anacor_arquivo02
+
+#Variável em coluna - coordenada no eixo das abcissas
+Xc_aplicacao <- diag((decomp$d[1]) * diag(diag(Dc)^(-1/2)) * decomp$v[,1])
+Xc_aplicacao
+
+#Variável em coluna - coordenada no eixo das ordenadas
+Yc_aplicacao <- diag((decomp$d[2]) * diag(diag(Dc)^(-1/2)) * decomp$v[,2])
+Yc_aplicacao
+
+
+
+
+
+
+coordenadas_linhas_anacor_arquivo02 <- anacor_arquivo02$row$coord
+coordenadas_linhas_anacor_arquivo02
+
+coordenadas_colunas_anacor_arquivo02 <- anacor_arquivo02$col$coord
+coordenadas_colunas_anacor_arquivo02
+
+
+mapa_perceptual_3D_anacor_arquivo02 <- plot_ly() 
+mapa_perceptual_3D_anacor_arquivo02
+
+# Inserindo as coordenadas das categorias da variável disposta em linha
+mapa_perceptual_3D_anacor_arquivo02 <- add_trace(mapa_perceptual_3D_anacor_arquivo02, 
+                                x = coordenadas_linhas_anacor_arquivo02[,1], 
+                                y = coordenadas_linhas_anacor_arquivo02[,2],
+                                z = coordenadas_linhas_anacor_arquivo02[,3],
+                                mode = "text", 
+                                text = rownames(coordenadas_linhas_anacor_arquivo02),
+                                textfont = list(color = "#440154FF"), 
+                                showlegend = FALSE) 
+
+mapa_perceptual_3D_anacor_arquivo02
+
+
+mapa_perceptual_3D_anacor_arquivo02 <- add_trace(mapa_perceptual_3D_anacor_arquivo02, 
+                                x = coordenadas_colunas_anacor_arquivo02[,1], 
+                                y = coordenadas_colunas_anacor_arquivo02[,2], 
+                                z = coordenadas_colunas_anacor_arquivo02[,3],
+                                mode = "text", 
+                                text = rownames(coordenadas_colunas_anacor_arquivo02),
+                                textfont = list(color = "#287C8EFF"), 
+                                showlegend = FALSE) 
+
+mapa_perceptual_3D_anacor_arquivo02
+
+
+
+mapa_perceptual_3D_anacor_arquivo02 <- layout(mapa_perceptual_3D_anacor_arquivo02, 
+                             scene = list(xaxis = list(title = colnames(coordenadas_colunas_anacor_arquivo02)[1]),
+                                          yaxis = list(title = colnames(coordenadas_colunas_anacor_arquivo02)[2]),
+                                          zaxis = list(title = colnames(coordenadas_colunas_anacor_arquivo02)[3]),
+                                          aspectmode = "data"),
+                             margin = list(l = 0, r = 0, b = 0, t = 0))
+
+mapa_perceptual_3D_anacor_arquivo02
+
+
+
+anacor_arquivo02$eig
+anacor_arquivo03$eig
+
+ca_coordenadas_anacor_arquivo02 <- rbind(anacor_arquivo02$row$coord, anacor_arquivo02$col$coord)
+
+ca_coordenadas_anacor_arquivo02
+
